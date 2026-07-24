@@ -57,13 +57,30 @@ function DashboardLayout() {
 
         {/* User info at bottom */}
         <div className="px-4 py-4 border-t border-gray-700">
-          <p className="text-xs text-gray-400 mb-2 truncate">{user?.email}</p>
-          <button
-            onClick={logout}
-            className="w-full text-left text-sm text-gray-400 hover:text-red-400 transition"
-          >
-            Log Out
-          </button>
+          <p className="text-xs text-gray-400 mb-6 truncate text-center">{user?.email}</p>
+          
+           <button
+  onClick={logout}
+  className="
+    w-full
+    
+    border 
+    flex items-center 
+    px-3 py-1.5
+    justify-center
+    text-sm font-medium
+    text-gray-400
+    rounded-lg
+    hover:bg-red-500/10
+    hover:text-red-400
+    transition-colors
+    duration-200
+    
+  "
+>
+   Log Out
+</button>
+            
         </div>
       </div>
 
