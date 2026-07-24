@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import FileCard from './FileCard'
-
+import UploadModal from './uploadModal'
 const MOCK_FILES = [
   { id: '1', name: 'Project Report.pdf', size: 2400000, type: 'pdf' },
   { id: '2', name: 'Logo Design.png', size: 1200000, type: 'image' },
@@ -11,6 +11,7 @@ const MOCK_FILES = [
 ]
 
 function FileBrowser() {
+  const [showUpload, setShowUpload] = useState(false)
   const [view, setView] = useState('grid')
   const [search, setSearch] = useState('')
 
@@ -58,9 +59,15 @@ function FileBrowser() {
           </div>
 
           {/* Upload button */}
-          <button className="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition">
+         { /*<button className="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition">
             ⬆ Upload
-          </button>
+          </button>*/}
+          <button
+  onClick={() => setShowUpload(true)}
+  className="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition"
+>
+  ⬆ Upload
+</button>
         </div>
       </div>
 
@@ -106,6 +113,10 @@ function FileBrowser() {
           ))}
         </div>
       )}
+      <UploadModal
+  isOpen={showUpload}
+  onClose={() => setShowUpload(false)}
+/>
     </div>
   )
 }
