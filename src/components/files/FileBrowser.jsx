@@ -12,12 +12,25 @@ const MOCK_FILES = [
 
 function FileBrowser() {
   const [view, setView] = useState('grid')
+  const [search, setSearch] = useState('')
+
+  const filteredFiles = MOCK_FILES.filter(file =>
+    file.name.toLowerCase().includes(search.toLowerCase())
+  )
 
   return (
     <div>
       {/* Toolbar */}
-      <div className="flex items-center justify-between mb-6">
-        <p className="text-sm text-gray-500">{MOCK_FILES.length} files</p>
+      <div className="flex items-center justify-between mb-6 gap-4">
+
+        {/* Search box */}
+        <input
+          type="text"
+          placeholder="Search files..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="flex-1 max-w-sm border border-gray-200 rounded-lg px-4 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        />
 
         <div className="flex items-center gap-3">
           {/* View toggle */}
@@ -51,19 +64,34 @@ function FileBrowser() {
         </div>
       </div>
 
+      {/* Result count */}
+      <p className="text-sm text-gray-500 mb-4">
+        {filteredFiles.length} {filteredFiles.length === 1 ? 'file' : 'files'}
+        {search && ` matching "${search}"`}
+      </p>
+
+      {/* Empty state */}
+      {filteredFiles.length === 0 && (
+        <div className="text-center py-20 text-gray-400">
+          <div className="text-5xl mb-3">🔍</div>
+          <p className="font-medium">No files found</p>
+          <p className="text-sm mt-1">Try a different search term</p>
+        </div>
+      )}
+
       {/* Grid view */}
-      {view === 'grid' && (
+      {view === 'grid' && filteredFiles.length > 0 && (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-          {MOCK_FILES.map(file => (
+          {filteredFiles.map(file => (
             <FileCard key={file.id} file={file} />
           ))}
         </div>
       )}
 
       {/* List view */}
-      {view === 'list' && (
+      {view === 'list' && filteredFiles.length > 0 && (
         <div className="flex flex-col gap-2">
-          {MOCK_FILES.map(file => (
+          {filteredFiles.map(file => (
             <div key={file.id} className="flex items-center gap-4 bg-white border border-gray-200 rounded-xl px-4 py-3 hover:shadow-sm transition cursor-pointer">
               <span className="text-xl">
                 {{ pdf: '📄', image: '🖼️', text: '📃', doc: '📝' }[file.type] || '📎'}
