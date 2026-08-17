@@ -1,7 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
-
+import authRoutes from './routes/authRoutes.js'
 dotenv.config()
 
 import './config/db.js'
@@ -15,7 +15,7 @@ app.use(cors({
   credentials: true,
 }))
 app.use(express.json())
-
+app.use('/api/auth', authRoutes)
 // Health check route
 app.get('/', (req, res) => {
   res.json({ message: 'CloudDrive API is running ✅' })
