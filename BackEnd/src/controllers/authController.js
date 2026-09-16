@@ -38,7 +38,7 @@ export async function register(req, res) {
       `INSERT INTO users (name, email, password)
        VALUES ($1, $2, $3)
        RETURNING id, name, email, storage_used, storage_limit, created_at`,
-      [name, email, hashedPassword]
+      [name, email, h]
     )
 
     const user = result.rows[0]
